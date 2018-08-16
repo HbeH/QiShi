@@ -12,7 +12,7 @@ public class TestController {
 
 	@RequestMapping("/test")
 	public BackResult test(){
-		System.out.println(22);
+		System.out.println(33);
 		BackResult backResult = new BackResult();
 		backResult.setData("1");
 		backResult.setMsg("test");
