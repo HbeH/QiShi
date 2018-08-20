@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soecode.lyf.dao.TtUserMapper">
+
+    <!--user结果映射 -->
+    <resultMap id="TtUserBase" type="com.soecode.lyf.entity.TtUser">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="tt" property="tt" />
+        <result column="performance" property="performance" />
+        <result column="phone" property="phone" />
+        <result column="avatar" property="avatar" />
+        <result column="createDate" property="createDate" />
+        <result column="updateDate" property="updateDate" />
+        <result column="openId" property="openId" />
+    </resultMap>
+
+    <!--获取所有用户随机号-->
+    <select id="getAllUserTt"  resultMap="TtUserBase">
+        select tt from tt_user
+    </select>
+
+    <!--通过手机号查询用户-->
+    <select id="getTtUserByPhone" parameterType="String" resultMap="TtUserBase">
+        SELECT * FROM tt_user where phone = #{phone}
+    </select>
+
+    <!--修改用户履约值-->
+    <update id="updateTtUser" parameterType="TtUser" >
+        UPDATE tt_user set performance=#{performance},updateDate=#{updateDate} where phone=#{phone}
+    </update>
+    
+    <!--添加用户-->
+    <insert id="addTtUser" parameterType="TtUser">
+        insert into tt_user (tt,performance,phone,avatar,createDate,updateDate,openId)
+        values (#{tt},#{performance},#{phone},#{avatar},#{createDate},#{updateDate},#{openId});
+    </insert>
+
+
+
+
+</mapper>

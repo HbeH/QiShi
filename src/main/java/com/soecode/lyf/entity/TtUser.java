@@ -11,6 +11,15 @@ public class TtUser {
     private String avatar;              //头像
     private String createDate;
     private String updateDate;
+    private String openId;              //微信号唯一标示
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
 
     public Integer getId() {
         return id;
