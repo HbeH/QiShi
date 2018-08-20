@@ -83,6 +83,7 @@ public class RUserMsgController {
      */
     @RequestMapping(value = "saveUserMsg",method = RequestMethod.POST)
     public BackResult saveUserMsg(String userId,String name,String sex,String school,String number){
+    	System.out.println(name);
         TtAuthentification ttAuthentification = ttAuthentificationServiceImpl.getTtAuthentificationByUserId(userId);
         if(ttAuthentification!=null){
             ttAuthentification.setName(name);
