@@ -1,4 +1,4 @@
-package com.soecode.lyf.dto;
+package com.soecode.lyf.entity;
 
 /**
  * 订单安排给骑士

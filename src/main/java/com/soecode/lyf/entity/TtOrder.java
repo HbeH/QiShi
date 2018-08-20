@@ -1,4 +1,4 @@
-package com.soecode.lyf.dto;
+package com.soecode.lyf.entity;
 
 /**
  * 订单表 帮我送 帮我取  帮我买

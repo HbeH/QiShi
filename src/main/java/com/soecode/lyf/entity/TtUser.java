@@ -1,4 +1,4 @@
-package com.soecode.lyf.dto;
+package com.soecode.lyf.entity;
 
 /**
  * 用户表

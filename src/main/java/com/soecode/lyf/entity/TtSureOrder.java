@@ -1,4 +1,4 @@
-package com.soecode.lyf.dto;
+package com.soecode.lyf.entity;
 
 /**
  * 订单表确认地址信息后
