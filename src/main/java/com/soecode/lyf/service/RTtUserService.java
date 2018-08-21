@@ -4,7 +4,7 @@ import com.soecode.lyf.entity.TtUser;
 
 import java.util.List;
 
-public interface TtUserService {
+public interface RTtUserService {
     public int addTtUser(TtUser user);
     public List<String> getAllUserTt();
     public TtUser getTtUserByPhone(String phone);

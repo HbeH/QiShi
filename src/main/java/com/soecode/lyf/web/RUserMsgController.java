@@ -4,8 +4,8 @@ import com.soecode.lyf.dto.BackResult;
 import com.soecode.lyf.dto.TtUtils;
 import com.soecode.lyf.entity.TtAuthentification;
 import com.soecode.lyf.entity.TtUser;
-import com.soecode.lyf.service.TtAuthentificationService;
-import com.soecode.lyf.service.TtUserService;
+import com.soecode.lyf.service.RTtAuthentificationService;
+import com.soecode.lyf.service.RTtUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +23,9 @@ import java.util.Map;
 @RequestMapping("/ttUser")
 public class RUserMsgController {
     @Autowired
-    TtUserService ttUserServiceImpl;
+    RTtUserService ttUserServiceImpl;
     @Autowired
-    TtAuthentificationService ttAuthentificationServiceImpl;
+    RTtAuthentificationService ttAuthentificationServiceImpl;
 
     /**
      * 用户登录

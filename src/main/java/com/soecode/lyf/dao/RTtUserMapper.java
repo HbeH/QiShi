@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface TtUserMapper {
+public interface RTtUserMapper {
     public int addTtUser(TtUser user);
     public List<String> getAllUserTt();
     public TtUser getTtUserByPhone(@Param("phone") String phone);
