@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.soecode.lyf.dao.RTtAuthentificationMapper">
 
-    <!--user结果映射 -->
+
     <resultMap id="TtAuthentificationBase" type="com.soecode.lyf.entity.TtAuthentification">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="userId" property="userId" />
@@ -18,18 +18,18 @@
     </resultMap>
 
 
-    <!--通过手机号查询用户-->
+
     <select id="getTtAuthentificationByUserId" parameterType="String" resultMap="TtAuthentificationBase">
         SELECT * FROM tt_authentification where userId = #{userId}
     </select>
 
-    <!--修改用户履约值-->
+
     <update id="updateTtAuthentification" parameterType="TtAuthentification" >
         UPDATE tt_authentification set
         name=#{name},sex=#{sex},school=#{school},number=#{number},updateDate=#{updateDate} where userId=#{userId}
     </update>
 
-    <!--添加用户-->
+
     <insert id="addTtAuthentification" parameterType="TtAuthentification">
         insert into tt_authentification(userId,name,sex,school,number,type,frontImg,contraryImg,createDate,updateDate)
         values (#{userId},#{name},#{sex},#{school},#{number},#{type},#{frontImg},#{contraryImg},#{createDate},#{updateDate})

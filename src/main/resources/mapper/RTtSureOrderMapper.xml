@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soecode.lyf.dao.RTtSureOrderMapper">
+
+
+    <resultMap id="sureBase" type="com.soecode.lyf.entity.TtSureOrder">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="userId" property="userId" />
+        <result column="ttOrderId" property="ttOrderId" />
+        <result column="ttCouponId" property="ttCouponId" />
+        <result column="ttTypeOrder" property="ttTypeOrder" />
+        <result column="time" property="time" />
+        <result column="level" property="level" />
+        <result column="remark" property="remark" />
+        <result column="price" property="price" />
+        <result column="totalPrice" property="totalPrice" />
+        <result column="status" property="status" />
+        <result column="createDate" property="createDate" />
+        <result column="updateDate" property="updateDate" />
+    </resultMap>
+
+    <select id="getTtSureOrdersByUserIdAndStatus" parameterType="String" resultMap="sureBase">
+        select * from tt_sure_order where userId=#{userId}
+        <if test="status != null and status != '' ">
+            AND status = #{status}
+        </if>
+    </select>
+
+    <insert id="addTtSureOrder" parameterType="TtSureOrder">
+        insert into tt_sure_order(userId,ttOrderId,ttCouponId,ttTypeOrder,time,level,remark,price,totalPrice,status,createDate,updateDate)
+        values (#{userId},#{ttOrderId},#{ttCouponId},#{ttTypeOrder},#{time},#{level},#{remark},#{price},#{totalPrice},#{status},#{createDate},#{updateDate})
+    </insert>
+
+
+    <update id="updateStatus" parameterType="TtSureOrder">
+        UPDATE tt_sure_order set status=#{status},updateDate=#{updateDate}
+        WHERE id=#{id}
+    </update>
+    
+    <select id="getTtSureOrderByOrderId" parameterType="String" resultMap="sureBase">
+        select * FROM tt_sure_order where ttOrderId=#{ttOrderId}
+    </select>
+
+
+</mapper>

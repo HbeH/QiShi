@@ -18,6 +18,15 @@ public class TtOrder {
     private String version;             //高并发
     private String createDate;
     private String updateDate;
+    private String ttQiOrder;           //骑士编号
+
+    public String getTtQiOrder() {
+        return ttQiOrder;
+    }
+
+    public void setTtQiOrder(String ttQiOrder) {
+        this.ttQiOrder = ttQiOrder;
+    }
 
     public Integer getId() {
         return id;

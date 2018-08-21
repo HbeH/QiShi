@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soecode.lyf.dao.RTtOrderMapper">
+
+
+    <resultMap id="ttOrderBase" type="com.soecode.lyf.entity.TtOrder">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="userId" property="userId" />
+        <result column="ttOrderId" property="ttOrderId" />
+        <result column="ttTypeId" property="ttTypeId" />
+        <result column="typeOrder" property="typeOrder" />
+        <result column="getPhone" property="getPhone" />
+        <result column="getAddress" property="getAddress" />
+        <result column="getDetail" property="getDetail" />
+        <result column="receivePhone" property="receivePhone" />
+        <result column="receiveAddress" property="receiveAddress" />
+        <result column="receiveDetail" property="receiveDetail" />
+        <result column="version" property="version" />
+        <result column="createDate" property="createDate" />
+        <result column="updateDate" property="updateDate" />
+        <result column="ttQiOrder" property="ttQiOrder" />
+    </resultMap>
+
+    <select id="getTtOrderByOrderId" parameterType="String" resultMap="ttOrderBase">
+        select * from tt_order where ttOrderId=#{ttOrderId}
+    </select>
+
+    <insert id="addTtOrder" parameterType="TtOrder">
+        insert into tt_order(userId,ttOrderId,ttTypeId,typeOrder,getPhone,getAddress,getDetail,receivePhone,receiveAddress,receiveDetail,version,createDate,updateDate,ttQiOrder)
+        values (#{userId},#{ttOrderId},#{ttTypeId},#{typeOrder},#{getPhone},#{getAddress},#{getDetail},#{receivePhone},#{receiveAddress},#{receiveDetail},#{version},#{createDate},#{updateDate},#{ttQiOrder})
+    </insert>
+    
+    <!--采用乐观锁解决抢单时的并发-->
+    <update id="qishiGetOrder" parameterType="TtOrder">
+        <![CDATA[
+        update tt_order
+        set ttQiOrder = #{ttQiOrder},version = version + 1,updateDate=#{updateDate}
+        where ttOrderId = #{ttOrderId} and version = #{version}
+        ]]>
+    </update>
+
+
+
+</mapper>

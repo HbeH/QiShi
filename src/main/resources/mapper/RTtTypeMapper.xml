@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soecode.lyf.dao.RTtTypeMapper">
+
+
+    <resultMap id="ttTypeBase" type="com.soecode.lyf.entity.TtType">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" />
+        <result column="price" property="price" />
+    </resultMap>
+
+    <select id="getAllType" resultMap="ttTypeBase">
+        SELECT * from tt_type
+    </select>
+
+    <select id="getTtTypeById" parameterType="String" resultMap="ttTypeBase">
+        SELECT * from tt_type where id=#{id}
+    </select>
+
+
+
+</mapper>

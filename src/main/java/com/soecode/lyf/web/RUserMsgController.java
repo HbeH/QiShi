@@ -2,10 +2,8 @@ package com.soecode.lyf.web;
 
 import com.soecode.lyf.dto.BackResult;
 import com.soecode.lyf.dto.TtUtils;
-import com.soecode.lyf.entity.TtAuthentification;
-import com.soecode.lyf.entity.TtUser;
-import com.soecode.lyf.service.RTtAuthentificationService;
-import com.soecode.lyf.service.RTtUserService;
+import com.soecode.lyf.entity.*;
+import com.soecode.lyf.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +24,15 @@ public class RUserMsgController {
     RTtUserService ttUserServiceImpl;
     @Autowired
     RTtAuthentificationService ttAuthentificationServiceImpl;
+    @Autowired
+    RTtReceiveService rTtReceiveServiceImpl;
+    @Autowired
+    RTtTypeService rTtTypeServiceImpl;
+    @Autowired
+    RTtSureOrderService rTtSureOrderServiceImpl;
+    @Autowired
+    RTtOrderService rTtOrderServiceImpl;
+
 
     /**
      * 用户登录
@@ -107,4 +114,144 @@ public class RUserMsgController {
         }
         return BackResult.build(0,"success");
     }
+
+
+    /**
+     * 跳转到地址编辑
+     * Fyr
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "getUserAddress",method = RequestMethod.POST)
+    public BackResult getUserAddress(String userId){
+        return BackResult.build(0,"success",rTtReceiveServiceImpl.gettReceiveByUserId(userId));
+    }
+
+
+    /**
+     * 保存用户收货地址
+     * Fry
+     * @param userId
+     * @param name
+     * @param sex
+     * @param address
+     * @param detail
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "saveUserAddress",method = RequestMethod.POST)
+    public BackResult saveUserAdress(String userId,String name,String sex,String address,String detail,String phone){
+        TtReceive tr = rTtReceiveServiceImpl.gettReceiveByUserId(userId);
+        if(tr!=null){
+            tr.setName(name);
+            tr.setSex(sex);
+            tr.setAddress(address);
+            tr.setDetail(detail);
+            tr.setPhone(phone);
+            tr.setUpdateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            rTtReceiveServiceImpl.updatetReceive(tr);
+        }else{
+            tr = new TtReceive();
+            tr.setUpdateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            tr.setCreateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            tr.setPhone(phone);
+            tr.setDetail(detail);
+            tr.setName(name);
+            tr.setSex(sex);
+            tr.setAddress(address);
+            tr.setUserId(userId);
+            rTtReceiveServiceImpl.addtReceive(tr);
+        }
+        return BackResult.build(0,"success");
+    }
+
+    /**
+     * 获取所有代做类型及收费信息
+     * @return
+     */
+    @RequestMapping(value = "getAllType",method = RequestMethod.POST)
+    public BackResult getAllType(){
+        List<TtType> list = rTtTypeServiceImpl.getAllType();
+        return BackResult.build(0,"success",list);
+    }
+
+    /**
+     * 保存用户订单收发地址
+     * @param ttOrder
+     * userId
+     * ttTypeId  1  2 ...
+     * typeOrder 0取  1送  2买
+     * getPhone   getAddress     getDetail
+     * receivePhone   receiveAddress     receiveDetail
+     * @return
+     */
+    @RequestMapping(value = "saveOrderAddress",method = RequestMethod.POST)
+    public BackResult saveOrderAddress(TtOrder ttOrder){
+        ttOrder.setCreateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        ttOrder.setUpdateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        ttOrder.setTtQiOrder("");
+        ttOrder.setVersion("0");
+        String ttorderId = TtUtils.TtRandomNum();
+        ttOrder.setTtOrderId(ttorderId);
+        rTtOrderServiceImpl.addTtOrder(ttOrder);
+        TtType t = rTtTypeServiceImpl.getTtTypeById(ttOrder.getTtTypeId());
+        Map map = new HashMap();
+        map.put("ttOrderId",ttorderId);
+        map.put("price",t.getPrice());
+        return BackResult.build(0,"success",map);
+    }
+
+    /**
+     * 用户支付成功，生成订单信息
+     * @param ttSureOrder
+     * userId
+     * ttOrderId    ttCouponId     time(没有预约则传 "" 空引号)  level 0立即  1加急   2预约
+     * remark    totalPrice（即price）
+     * @return
+     */
+    @RequestMapping(value = "saveOrder",method = RequestMethod.POST)
+    public BackResult saveOrder(TtSureOrder ttSureOrder){
+        ttSureOrder.setCreateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        ttSureOrder.setUpdateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        ttSureOrder.setStatus("0");
+        ttSureOrder.setPrice("");
+        rTtSureOrderServiceImpl.addTtSureOrder(ttSureOrder);
+        return BackResult.build(0,"success");
+    }
+
+    /**
+     * 骑士接单
+     * @param quserId
+     * @param ttOrderId
+     * @return
+     */
+    @RequestMapping(value = "qishiGetOrder",method = RequestMethod.POST)
+    public BackResult qishiGetOrder(String quserId,String ttOrderId,String version){
+        TtOrder to = rTtOrderServiceImpl.getTtOrderByOrderId(ttOrderId);
+        to.setTtQiOrder(quserId);
+        to.setVersion(version);
+        int flag = rTtOrderServiceImpl.qishiGetOrder(to);
+        if(flag==1){
+            System.out.println("用户  ："+quserId+"抢单成功!");
+            TtSureOrder ts = rTtSureOrderServiceImpl.getTtSureOrderByOrderId(ttOrderId);
+            ts.setStatus("1");
+            rTtSureOrderServiceImpl.updateStatus(ts);
+            return BackResult.build(0,"success");
+        }else{
+            return BackResult.build(1,"抢单失败！");
+        }
+    }
+
+    /**
+     * 根据状态查询订单信息
+     * @param userId
+     * @param status   0待接单  1进行中   2已完成    3待评价    4已取消
+     * @return
+     */
+    @RequestMapping(value = "getUserOrder",method = RequestMethod.POST)
+    public BackResult getUserOrder(String userId,String status){
+        List<TtSureOrder> list = rTtSureOrderServiceImpl.getTtSureOrdersByUserIdAndStatus(userId,status);
+        return BackResult.build(0,"success",list);
+    }
+
 }

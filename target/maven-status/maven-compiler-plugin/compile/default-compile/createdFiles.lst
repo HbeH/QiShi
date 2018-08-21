@@ -1,4 +1,10 @@
 com\soecode\lyf\entity\TtAuthentification.class
+com\soecode\lyf\entity\TtUser.class
+com\soecode\lyf\entity\TtCoupon.class
+com\soecode\lyf\service\Test.class
+com\soecode\lyf\service\impl\Test.class
+com\soecode\lyf\entity\TtOrder.class
+com\soecode\lyf\dto\BackResult.class
 com\soecode\lyf\entity\TtReceive.class
 com\soecode\lyf\exception\Test.class
 com\soecode\lyf\web\RUserMsgController.class
@@ -6,13 +12,7 @@ com\soecode\lyf\dao\Test.class
 com\soecode\lyf\enums\Test.class
 com\soecode\lyf\entity\Test.class
 com\soecode\lyf\entity\TtType.class
-com\soecode\lyf\entity\TtUser.class
-com\soecode\lyf\entity\TtCoupon.class
 com\soecode\lyf\entity\TtSureOrder.class
 com\soecode\lyf\entity\TtQiOrder.class
-com\soecode\lyf\service\Test.class
 com\soecode\lyf\dto\TtUtils.class
-com\soecode\lyf\service\impl\Test.class
-com\soecode\lyf\entity\TtOrder.class
-com\soecode\lyf\dto\BackResult.class
 com\soecode\lyf\web\TestController.class

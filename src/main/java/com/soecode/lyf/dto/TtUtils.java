@@ -18,6 +18,16 @@ public class TtUtils {
 		    }
 			return result;
 	}
+
+	public static String TtRandomNum(){
+		Random random = new Random();
+		String result="";
+		for (int i=0;i<9;i++)
+		{
+			result+=random.nextInt(10);
+		}
+		return result;
+	}
 	/**
 	 * 循环比较数据库的随机id
 	 * @param randString
