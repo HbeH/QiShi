@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soecode.lyf.dao.RTtUserQiShiMapper">
+
+
+    <resultMap id="tuBase" type="com.soecode.lyf.entity.TtUserQiShi">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="tt" property="tt" />
+        <result column="performance" property="performance" />
+        <result column="phone" property="phone" />
+        <result column="avatar" property="avatar" />
+        <result column="speed" property="speed" />
+        <result column="serve" property="serve" />
+        <result column="additional" property="additional" />
+        <result column="createDate" property="createDate" />
+        <result column="updateDate" property="updateDate" />
+    </resultMap>
+
+
+
+    <insert id="addTtUserQiShi" parameterType="TtUserQiShi">
+        insert into tt_user_qishi(tt,performance,phone,avatar,speed,serve,additional,createDate,updateDate)
+        values (#{tt},#{performance},#{phone},#{avatar},#{speed},#{serve},#{additional},#{createDate},#{updateDate})
+    </insert>
+
+
+    <update id="updateUserQiShiByTt" parameterType="TtUserQiShi">
+        UPDATE tt_user_qishi set speed=#{speed},serve=#{serve},additional=#{additional},performance=#{performance},updateDate=#{updateDate}
+        WHERE tt=#{tt}
+    </update>
+
+    <select id="getTtUserQiShiByTt" parameterType="String" resultMap="tuBase">
+        select * FROM tt_user_qishi where tt=#{tt}
+    </select>
+
+
+</mapper>

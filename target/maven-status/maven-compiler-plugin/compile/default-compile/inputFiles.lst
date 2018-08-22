@@ -1,4 +1,5 @@
 D:\offer\QiShi\src\main\java\com\soecode\lyf\entity\TtOrder.java
+D:\offer\QiShi\src\main\java\com\soecode\lyf\service\RTtUserQiShiService.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\service\RTtTypeService.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\service\RTtAuthentificationService.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\entity\TtSureOrder.java
@@ -14,12 +15,16 @@ D:\offer\QiShi\src\main\java\com\soecode\lyf\service\RTtUserService.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\dao\RTtTypeMapper.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\service\Test.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\dto\BackResult.java
+D:\offer\QiShi\src\main\java\com\soecode\lyf\service\RTtQiOrderService.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\service\RTtSureOrderService.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\dao\RTtAuthentificationMapper.java
+D:\offer\QiShi\src\main\java\com\soecode\lyf\service\impl\RTtQiOrderServiceImpl.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\dao\Test.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\entity\TtUser.java
+D:\offer\QiShi\src\main\java\com\soecode\lyf\dao\RTtUserQiShiMapper.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\entity\TtCoupon.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\entity\TtType.java
+D:\offer\QiShi\src\main\java\com\soecode\lyf\dao\RTtQiOrderMapper.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\enums\Test.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\dao\RTtReceiveMapper.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\dao\RTtSureOrderMapper.java
@@ -27,10 +32,12 @@ D:\offer\QiShi\src\main\java\com\soecode\lyf\service\RTtReceiveService.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\entity\Test.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\service\impl\RTtReceIveServiceImpl.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\service\impl\RTtTypeServiceImpl.java
+D:\offer\QiShi\src\main\java\com\soecode\lyf\entity\TtUserQiShi.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\dao\RTtUserMapper.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\dao\RTtOrderMapper.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\dto\TtUtils.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\exception\Test.java
+D:\offer\QiShi\src\main\java\com\soecode\lyf\service\impl\RTtUserQiShiServiceImpl.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\entity\TtAuthentification.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\service\impl\RTtSureOrderServiceImpl.java
 D:\offer\QiShi\src\main\java\com\soecode\lyf\service\impl\RTtUserServiceImpl.java

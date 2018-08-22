@@ -32,6 +32,10 @@ public class RUserMsgController {
     RTtSureOrderService rTtSureOrderServiceImpl;
     @Autowired
     RTtOrderService rTtOrderServiceImpl;
+    @Autowired
+    RTtUserQiShiService rTtUserQiShiServiceImpl;
+    @Autowired
+    RTtQiOrderService rTtQiOrderServiceImpl;
 
 
     /**
@@ -222,7 +226,7 @@ public class RUserMsgController {
     /**
      * 骑士接单
      * @param quserId
-     * @param ttOrderId
+     * @param ttOrderId     version
      * @return
      */
     @RequestMapping(value = "qishiGetOrder",method = RequestMethod.POST)
@@ -236,6 +240,17 @@ public class RUserMsgController {
             TtSureOrder ts = rTtSureOrderServiceImpl.getTtSureOrderByOrderId(ttOrderId);
             ts.setStatus("1");
             rTtSureOrderServiceImpl.updateStatus(ts);
+            TtQiOrder t = new TtQiOrder();
+            t.setAdditional("");
+            t.setCreateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            t.setUpdateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            t.setMessage("");
+            t.setQiShiUserId(quserId);
+            t.setServe("");
+            t.setSpeed("");
+            t.setTtOrderId(ttOrderId);
+            t.setTtUserId(to.getUserId());
+            rTtQiOrderServiceImpl.addTtQiOrder(t);
             return BackResult.build(0,"success");
         }else{
             return BackResult.build(1,"抢单失败！");
@@ -253,5 +268,79 @@ public class RUserMsgController {
         List<TtSureOrder> list = rTtSureOrderServiceImpl.getTtSureOrdersByUserIdAndStatus(userId,status);
         return BackResult.build(0,"success",list);
     }
+
+    /**
+     * 根据订单号查询订单
+     * @param orderId
+     * @return
+     */
+    @RequestMapping(value = "getUserOrder",method = RequestMethod.POST)
+    public BackResult getOrderMsg(String orderId){
+        TtOrder to = rTtOrderServiceImpl.getTtOrderByOrderId(orderId);
+        return BackResult.build(0,"success",to);
+    }
+
+    /**
+     * 查询骑士信息
+     * @param qishiId
+     * @return
+     */
+    @RequestMapping(value = "getUserQishiMsg",method = RequestMethod.POST)
+    public BackResult getUserQishiMsg(String qishiId){
+        TtUserQiShi tu = rTtUserQiShiServiceImpl.getTtUserQiShiByTt(qishiId);
+        return BackResult.build(0,"success",tu);
+    }
+
+    /**
+     * 用户取消订单
+     * @param userId
+     * @param orderId
+     * @return
+     */
+    @RequestMapping(value = "userQxOrder",method = RequestMethod.POST)
+    public BackResult userQxOrder(String userId,String orderId){
+        TtSureOrder t =  rTtSureOrderServiceImpl.getTtSureOrderByOrderId(orderId);
+        if(t!=null){
+            if(t.getUserId().equals(userId)){
+                t.setStatus("4");
+                rTtSureOrderServiceImpl.updateStatus(t);
+                return BackResult.build(0,"success");
+            }else{
+                return BackResult.build(1,"取消订单失败(用户不匹配！)");
+            }
+        }else{
+            return BackResult.build(1,"取消订单失败(订单不存在！)");
+        }
+
+    }
+
+
+    /**
+     *用户评论订单
+     * @param orderId
+     * @param speed
+     * @param serve
+     * @param additional
+     * @param message
+     * @return
+     */
+    @RequestMapping(value = "userPlOrder",method = RequestMethod.POST)
+    public BackResult userPlOrder(String orderId,String speed,String serve,String additional,String message){
+        TtQiOrder tq = rTtQiOrderServiceImpl.getTtQiOrderByTtOrderId(orderId);
+        tq.setSpeed(speed);
+        tq.setServe(serve);
+        tq.setUpdateDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        tq.setAdditional(additional);
+        tq.setMessage(message);
+        rTtQiOrderServiceImpl.updateQiOrderByTtOrderId(tq);
+        return BackResult.build(0,"success");
+    }
+
+
+    /**
+     * 1、用户，骑士 确认订单送达  （采用redis缓存加定时器任务）
+     * 2、用户身份验证成为骑士
+     * 3、后台实名审核、商品价格修改、优惠券等
+     */
 
 }

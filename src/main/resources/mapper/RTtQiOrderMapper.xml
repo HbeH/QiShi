@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.soecode.lyf.dao.RTtQiOrderMapper">
+
+
+    <resultMap id="qiBase" type="com.soecode.lyf.entity.TtQiOrder">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="userId" property="userId" />
+        <result column="qiShiUserId" property="qiShiUserId" />
+        <result column="ttOrderId" property="ttOrderId" />
+        <result column="speed" property="speed" />
+        <result column="serve" property="serve" />
+        <result column="additional" property="additional" />
+        <result column="message" property="message" />
+        <result column="createDate" property="createDate" />
+        <result column="updateDate" property="updateDate" />
+    </resultMap>
+
+
+
+    <insert id="addTtQiOrder" parameterType="TtQiOrder">
+        insert into tt_qi_order(userId,qiShiUserId,ttOrderId,speed,serve,additional,message,createDate,updateDate)
+        values (#{userId},#{qiShiUserId},#{ttOrderId},#{speed},#{serve},#{additional},#{message},#{createDate},#{updateDate})
+    </insert>
+
+
+    <update id="updateQiOrderByTtOrderId" parameterType="TtQiOrder">
+        UPDATE tt_qi_order set speed=#{speed},serve=#{serve},additional=#{additional},message=#{message},updateDate=#{updateDate}
+        WHERE id=#{id}
+    </update>
+
+    <select id="getTtQiOrderByTtOrderId" parameterType="String" resultMap="qiBase">
+        select * FROM tt_qi_order where ttOrderId=#{ttOrderId}
+    </select>
+
+
+</mapper>
